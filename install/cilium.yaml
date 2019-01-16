@@ -328,6 +328,7 @@ spec:
                 items:
                   - key: etcd-config
                     path: etcd.config
+                type: array
             # To read the k8s etcd secrets in case the user might want to use TLS
             - name: etcd-secrets
               secret:
@@ -340,7 +341,8 @@ spec:
                 optional: true
                 secretName: cilium-clustermesh
           restartPolicy: Always
-          priorityClassName: system-node-critical
+          # TODO: Check if a daemonSet can be federated on kube-system namespace
+          # priorityClassName: system-node-critical
           tolerations:
             - effect: NoSchedule
               key: node.kubernetes.io/not-ready

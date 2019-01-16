@@ -55,6 +55,9 @@ spec:
   template:
     spec:
       serviceName: "cilium-etcd"
+      selector:
+        matchLabels:
+          component: "cilium-etcd"    
       template:
         metadata:
           name: "etcd"
