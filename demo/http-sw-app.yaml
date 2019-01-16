@@ -1,0 +1,116 @@
+---
+apiVersion: primitives.federation.k8s.io/v1alpha1
+kind: FederatedService
+metadata:
+  name: deathstar
+spec:
+  template:
+    spec:
+      type: ClusterIP
+      ports:
+      - port: 80
+      selector:
+        org: empire
+        class: deathstar
+---
+apiVersion: primitives.federation.k8s.io/v1alpha1
+kind: FederatedServicePlacement
+metadata:
+  name: deathstar
+spec:
+  clusterNames:
+  - cluster2
+  - cluster1
+---
+apiVersion: primitives.federation.k8s.io/v1alpha1
+kind: FederatedDeployment
+metadata:
+  name: deathstar
+spec:
+  template:
+    spec:
+      replicas: 2
+      selector:
+        matchLabels:
+          org: empire
+          class: deathstar
+      template:
+        metadata:
+          labels:
+            org: empire
+            class: deathstar
+        spec:
+          containers:
+          - name: deathstar
+            image: docker.io/cilium/starwars
+---
+apiVersion: primitives.federation.k8s.io/v1alpha1
+kind: FederatedDeploymentPlacement
+metadata:
+  name: deathstar
+spec:
+  clusterNames:
+  - cluster2
+  - cluster1
+---
+apiVersion: primitives.federation.k8s.io/v1alpha1
+kind: FederatedDeployment
+metadata:
+  name: tiefighter
+spec:
+  template:
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          org: empire
+          class: tiefighter
+      template:
+        metadata:
+          labels:
+            org: empire
+            class: tiefighter
+        spec:
+          containers:
+          - name: spaceship
+            image: docker.io/tgraf/netperf
+---
+apiVersion: primitives.federation.k8s.io/v1alpha1
+kind: FederatedDeploymentPlacement
+metadata:
+  name: tiefighter
+spec:
+  clusterNames:
+  - cluster2
+  - cluster1
+---
+apiVersion: primitives.federation.k8s.io/v1alpha1
+kind: FederatedDeployment
+metadata:
+  name: xwing
+spec:
+  template:
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          org: alliance
+          class: xwing
+      template:
+        metadata:
+          labels:
+            org: alliance
+            class: xwing
+        spec:
+          containers:
+          - name: spaceship
+            image: docker.io/tgraf/netperf
+---
+apiVersion: primitives.federation.k8s.io/v1alpha1
+kind: FederatedDeploymentPlacement
+metadata:
+  name: xwing
+spec:
+  clusterNames:
+  - cluster2
+  - cluster1

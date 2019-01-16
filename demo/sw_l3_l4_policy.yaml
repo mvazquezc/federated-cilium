@@ -1,0 +1,29 @@
+apiVersion: primitives.federation.k8s.io/v1alpha1
+kind: FederatedCiliumNetworkPolicy
+description: "L3-L4 policy to restrict deathstar access to empire ships only"
+metadata:
+  name: "rule1"
+spec:
+  template:
+    spec:
+      endpointSelector:
+        matchLabels:
+          org: empire
+          class: deathstar
+      ingress:
+      - fromEndpoints:
+        - matchLabels:
+            org: empire
+        toPorts:
+        - ports:
+          - port: "80"
+            protocol: TCP
+---
+apiVersion: primitives.federation.k8s.io/v1alpha1
+kind: FederatedCiliumNetworkPolicyPlacement
+metadata:
+  name: "rule1"
+spec:
+  clusterNames:
+  - cluster2
+  - cluster1
