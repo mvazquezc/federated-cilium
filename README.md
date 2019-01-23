@@ -15,6 +15,8 @@ minikube start --profile cluster1 --network-plugin=cni --extra-config=kubelet.ne
 minikube start --profile cluster2 --network-plugin=cni --extra-config=kubelet.network-plugin=cni --memory=5120 --kubernetes-version v1.12.5 --vm-driver <your-driver>
 ```
 
+**Note**: If using minikube 0.33+ the following parameter must be added to the parameters above `--enable-default-cni`.
+
 ## Federation V2 Deployment
 
 Follow the Federation V2 [user guide](https://github.com/kubernetes-sigs/federation-v2/blob/master/docs/userguide.md) for deploying the Federation V2 Control Plane.
